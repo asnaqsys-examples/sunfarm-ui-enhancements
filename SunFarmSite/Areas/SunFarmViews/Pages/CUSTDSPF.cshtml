@@ -168,24 +168,26 @@
         const xAxis = chart.xAxes.push(new am4charts.CategoryAxis());
         const yAxis = chart.yAxes.push(new am4charts.ValueAxis());
 
+        xAxis.dataFields.category = 'category';
+
         const salesSeries = chart.series.push(new am4charts.ColumnSeries())
         salesSeries.dataFields.valueY = 'sales';
         salesSeries.dataFields.categoryX = 'category'
         // series.name = 'Total Sales'
 
         const returnsSeries = chart.series.push(new am4charts.ColumnSeries())
-        returnsSeries.dataFields.valueY = 'returns';
+        returnsSeries.dataFields.valueY = 'amount';
         returnsSeries.dataFields.categoryX = 'category'
         // series.name = 'Total Returns';
 
         chart.data = [
             {
                 category: 'Total Sales',
-                sales: 5151009.89
+                amount: 5151009.89
             },
             {
                 category: 'Total Returns',
-                returns: 605145.06
+                amount: 605145.06
             }
         ];
 
