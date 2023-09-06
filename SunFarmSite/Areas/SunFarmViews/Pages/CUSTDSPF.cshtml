@@ -123,14 +123,6 @@
                     <DdsDecField Col="20" For="SALESREC.SFCUSTNO" Color="DarkBlue" EditCode="Z" Comment="CUSTOMER NUMBER" />
                     <DdsCharField Col="28" For="SALESREC.SFNAME" Color="DarkBlue" />
                 </div>
-                <div Row="4">
-                    <DdsConstant Col="22" Text="Total Sales:" />
-                    <DdsDecField Col="35" For="SALESREC.SFSALES" Color="DarkBlue" EditCode="J" />
-                </div>
-                <div Row="5">
-                    <DdsConstant Col="20" Text="Total Returns:" />
-                    <DdsDecField Col="35" For="SALESREC.SFRETURNS" Color="DarkBlue" EditCode="J" />
-                </div>
                 <div id="sales-chart-container">
                     <div id="sales-chart">Sales Chart</div>
                 </div>
@@ -172,22 +164,22 @@
 
         const salesSeries = chart.series.push(new am4charts.ColumnSeries())
         salesSeries.dataFields.valueY = 'sales';
-        salesSeries.dataFields.categoryX = 'category'
-        // series.name = 'Total Sales'
+        salesSeries.dataFields.categoryX = 'category';
+        salesSeries.columns.template.tooltipText = "{categoryX}: [bold]{valueY}[/]";
 
         const returnsSeries = chart.series.push(new am4charts.ColumnSeries())
         returnsSeries.dataFields.valueY = 'amount';
-        returnsSeries.dataFields.categoryX = 'category'
-        // series.name = 'Total Returns';
+        returnsSeries.dataFields.categoryX = 'category';
+        returnsSeries.columns.template.tooltipText = "{categoryX}: [bold]{valueY}[/]";
 
         chart.data = [
             {
                 category: 'Total Sales',
-                amount: 5151009.89
+                amount: @Model.SALESREC.SFSALES
             },
             {
                 category: 'Total Returns',
-                amount: 605145.06
+                amount: @Model.SALESREC.SFRETURNS
             }
         ];
 
