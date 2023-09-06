@@ -118,22 +118,21 @@
                 </div>
                 <div Row="2">
                     <DdsCharField Col="2" For="SALESREC.SCPGM" />
-                    <DdsConstant Col="32" Text="Sales Information" Color="DarkBlue" />
                 </div>
-                <div Row="7">
+                <div Row="3">
                     <DdsDecField Col="20" For="SALESREC.SFCUSTNO" Color="DarkBlue" EditCode="Z" Comment="CUSTOMER NUMBER" />
                     <DdsCharField Col="28" For="SALESREC.SFNAME" Color="DarkBlue" />
                 </div>
-                <div Row="10">
+                <div Row="4">
                     <DdsConstant Col="22" Text="Total Sales:" />
                     <DdsDecField Col="35" For="SALESREC.SFSALES" Color="DarkBlue" EditCode="J" />
                 </div>
-                <div Row="12">
+                <div Row="5">
                     <DdsConstant Col="20" Text="Total Returns:" />
                     <DdsDecField Col="35" For="SALESREC.SFRETURNS" Color="DarkBlue" EditCode="J" />
                 </div>
-                <div Row="23">
-                    <DdsConstant Col="3" Text="F12=Previous" Color="Blue" />
+                <div id="sales-chart-container">
+                    <div id="sales-chart">Sales Chart</div>
                 </div>
             </DdsRecord> @* SALESREC *@
             <DdsRecord For="KEYS">
@@ -158,3 +157,37 @@
         </main>
     </DdsFile>
 </form>
+
+<script src="https://cdn.amcharts.com/lib/4/core.js"></script>
+<script src="https://cdn.amcharts.com/lib/4/charts.js"></script>
+<script>
+    const CHART_ID = 'sales-chart';
+    const chartEl = document.getElementById('sales-chart');
+    if (chartEl) {
+        const chart = am4core.create(CHART_ID, am4charts.XYChart);
+        const xAxis = chart.xAxes.push(new am4charts.CategoryAxis());
+        const yAxis = chart.yAxes.push(new am4charts.ValueAxis());
+
+        const salesSeries = chart.series.push(new am4charts.ColumnSeries())
+        salesSeries.dataFields.valueY = 'sales';
+        salesSeries.dataFields.categoryX = 'category'
+        // series.name = 'Total Sales'
+
+        const returnsSeries = chart.series.push(new am4charts.ColumnSeries())
+        returnsSeries.dataFields.valueY = 'returns';
+        returnsSeries.dataFields.categoryX = 'category'
+        // series.name = 'Total Returns';
+
+        chart.data = [
+            {
+                category: 'Total Sales',
+                sales: 5151009.89
+            },
+            {
+                category: 'Total Returns',
+                returns: 605145.06
+            }
+        ];
+
+    }
+</script>
