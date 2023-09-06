@@ -120,8 +120,15 @@
                     <DdsCharField Col="2" For="SALESREC.SCPGM" />
                 </div>
                 <div Row="3">
-                    <DdsDecField Col="20" For="SALESREC.SFCUSTNO" Color="DarkBlue" EditCode="Z" Comment="CUSTOMER NUMBER" />
-                    <DdsCharField Col="28" For="SALESREC.SFNAME" Color="DarkBlue" />
+                    <DdsConstant Col="2" Text="Customer Number" />
+                    <DdsDecField Col="15" For="SALESREC.SFCUSTNO" Color="DarkBlue" EditCode="Z" Comment="CUSTOMER NUMBER" />
+                </div>
+                <div Row="4">
+                    <DdsConstant Col="2" Text="Customer Name" />
+                    <DdsCharField Col="15" For="SALESREC.SFNAME" Color="DarkBlue" />
+                </div>
+                <div Row="5">
+
                 </div>
                 <div id="sales-chart-container">
                     <div id="sales-chart">Sales Chart</div>
@@ -167,10 +174,14 @@
         salesSeries.dataFields.categoryX = 'category';
         salesSeries.columns.template.tooltipText = "{categoryX}: [bold]{valueY}[/]";
 
+        salesSeries.columns.template.adapter.add("fill", columnColor );
+
         const returnsSeries = chart.series.push(new am4charts.ColumnSeries())
         returnsSeries.dataFields.valueY = 'amount';
         returnsSeries.dataFields.categoryX = 'category';
         returnsSeries.columns.template.tooltipText = "{categoryX}: [bold]{valueY}[/]";
+
+        returnsSeries.columns.template.adapter.add("fill", columnColor);
 
         chart.data = [
             {
@@ -182,6 +193,12 @@
                 amount: @Model.SALESREC.SFRETURNS
             }
         ];
+   }
 
+    function columnColor(fill,target) {
+        if (target.dataItem.index == 0) {
+            return 'blue';
+        }
+        return 'red';
     }
 </script>
