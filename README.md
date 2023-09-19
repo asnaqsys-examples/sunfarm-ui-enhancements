@@ -1,6 +1,6 @@
 # Sourcefiles for ASNA Monarch® Base SunFarm Example
 
-  Click [Here to read: 10 Basic UI Enhancements](https://asnaqsys.github.io/examples/sunfarm/sunfarm.html) Example's documentation.
+  Click [Here to read: Enhancements requiring Logic Change](https://asnaqsys.github.io/examples/sunfarm/sunfarm-logic-change.html) Example's documentation.
 
 This repository contains two Visual Studio 2022 Solutions:
 
