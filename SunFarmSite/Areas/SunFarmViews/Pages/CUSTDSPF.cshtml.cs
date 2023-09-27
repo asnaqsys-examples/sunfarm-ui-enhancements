@@ -17,8 +17,6 @@ namespace ACME.SunFarm.SunFarmViews
     ]
     public class CUSTDSPF : DisplayPageModel
     {
-        public const int CustomerSufilePageSize = 14 + 5;
-
         public SFLC_Model SFLC { get; set; }
         public CUSTREC_Model CUSTREC { get; set; }
         public SALESREC_Model SALESREC { get; set; }
@@ -39,7 +37,7 @@ namespace ACME.SunFarm.SunFarmViews
                 FunctionKeys = "F9 09;PageUp 51:!76;PageDown 50:!77",
                 DisplayFields = "!90",
                 DisplayRecords = "!90",
-                Size = CustomerSufilePageSize,
+                Size = 14,
                 IsExpandable = false,
                 EraseFormats = "CUSTREC , SALESREC"
             )

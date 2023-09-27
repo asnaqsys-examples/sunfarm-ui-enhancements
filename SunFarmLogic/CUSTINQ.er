@@ -12,8 +12,22 @@ BegClass CUSTINQ Extends(Program) Access(*Public) +
              System.ComponentModel.Description("Customer Inquiry and Maintenance")) + 
    UsesCycle(*Yes)
 
-    DclConst CustomerSufilePageSize 14+5
-    
+    //      ********************************************************************
+    //       JB   8/27/2004   Added F4 (Prompt) options.
+    //       JB   8/30/2004   Added 'submit job' option.
+    //       JB   9/01/2004   Fixed record locking problem.
+    //       JB   5/19/2005   Added colouring to the name/addr subfile.
+    //                        Added cursor postioning to the detail format.
+    //                        Added option to print sales online or in batch.
+    //                        Changed the prompt display to a window.
+    //       JB   5/23/2005   Added /COPY for reading CUSTOMERL1.
+    //                        Added customer name to the sales summary format.
+    //                        Added renaming of CUSTOMERL1 record format.
+    //       JB   5/24/2005   Simplified the LoadSfl subroutine.
+    //       JB   5/31/2005   Added PageDown/RollUp processing.
+    //       JB   6/01/2005   Renamed CMMASTER* files to CUSTOMER*.
+    //       JB  14/02/2006   Fixed bug in page up on the customer subfile -
+    //                        a customer record was skipped every time.
     //      ********************************************************************
     //       INDICATORS:
     //         03     F3 pressed
@@ -28,9 +42,11 @@ BegClass CUSTINQ Extends(Program) Access(*Public) +
     //         99     General error indicator
     //      ********************************************************************
     DclWorkStnFile CUSTDSPF DspFile("~\Areas\SunFarmViews\Pages\CUSTDSPF") Subfile( SFL1,sflrrn )
+    //                                    HANDLER('ASNAWINGS')
     DclDiskFile CUSTOMERL2  Type(*Input) Org(*Indexed) DB(MyJob.MyDatabase) File("*LIBL/CUSTOMERL2") ImpOpen(*No) RnmFmt( L2RECFMT )
     DclDiskFile CUSTOMERL1  Type(*Update) AddRec(*Yes) Org(*Indexed) DB(MyJob.MyDatabase) File("*LIBL/CUSTOMERL1") ImpOpen(*No) RnmFmt( L1RECFMT )
     DclDiskFile CUSTOMERL1_ReadOnly  Type(*Input) AddRec(*Yes) Org(*Indexed) DB(MyJob.MyDatabase) File("*LIBL/CUSTOMERL1") ImpOpen(*No) RnmFmt( L1RECFMT_ReadOnly )
+    //********************************************************************
     DclDs 
         DclDsFld #pNbrs            Type( *Zoned   )    Len( 3,0 )
         DclDsFld #pNbrsAlf         Type( *Char    )    Len( 3   ) StartAt(1)
@@ -523,7 +539,7 @@ BegClass CUSTINQ Extends(Program) Access(*Public) +
     //----------------------------------------------------------
 
         DoWhile ( *Not *IN77  /* EOF or full s/f. */ +
-            *And ( sflrrn < CustomerSufilePageSize ) )
+            *And ( sflrrn < 14 ) )
 
             SFCUSTNO = CMCUSTNO
             SFNAME1 = CMNAME
@@ -570,7 +586,7 @@ BegClass CUSTINQ Extends(Program) Access(*Public) +
         ReadP L2RECFMT Bof(*IN76)
 
         DoWhile ( *Not *IN76  /* EOF or full s/f. */ +
-            *And ( X < CustomerSufilePageSize ) )
+            *And ( X < 14 ) )
             X = X + 1
             ReadP L2RECFMT Bof(*IN76)
         EndDo
