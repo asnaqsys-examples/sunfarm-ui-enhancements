@@ -6,7 +6,7 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>disable</Nullable>
         <RunAnalyzersDuringLiveAnalysis>False</RunAnalyzersDuringLiveAnalysis>
-        <DisplayFileRoot>C:\Projects\sunfarm-ui-enhancements\SunFarmSite</DisplayFileRoot>
+        <DisplayFileRoot>$(MSBuildProjectDirectory)\..\SunFarmSite</DisplayFileRoot>
         <AssemblyName>ACME.SunFarmCustomers</AssemblyName>
     </PropertyGroup>
 
